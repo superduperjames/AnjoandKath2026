@@ -2,32 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Anjo and Kath Ties the Knot</title>
+  <title>Anjo and Kath Ties The Knot</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-
-<style>
-  body {
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  h1, h2 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-  }
-
-  .rsvp-intro,
-  section p {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    line-height: 1.6;
-  }
-</style>
 
   <style>
+    /* Registry brown box */
+    /* Registry inner card styled like location footer card */
+    .registry-card {
+      background: #91452c;
+      border-radius: 20px;
+      padding: 32px 28px;
+      max-width: 640px;
+      margin: auto;
+      text-align: center;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+    }
+
+    .registry-card h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .registry-card p {
+      margin-bottom: 18px;
+    }
+
+    .registry-btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      background: #fff;
+      color: #91452c;
+      font-weight: 600;
+    }
+
+    /* Popup */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .popup-content img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+    }
+
+    .popup-close {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #fff;
+      color: #333;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    
     html, body {
       margin: 0;
       padding: 0;
@@ -45,7 +96,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(115,55,36,0.2);
+      background: rgba(255,255,255,0.75);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       display: flex;
@@ -54,13 +105,12 @@
       padding: 12px 24px;
       z-index: 1000;
       box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      font-family: 'Playfair Display', serif;
     }
 
     nav a {
       margin: 0 12px;
       text-decoration: none;
-      color: #572514;
+      color: #222;
       font-weight: 600;
     }
 
@@ -72,7 +122,6 @@
       font-size: 12px;
       opacity: 0.6;
       cursor: pointer;
-      margin-right:3%;
     }
 
     /* Parallax base stretched end-to-end */
@@ -97,6 +146,14 @@
       content: "";
       position: absolute;
       inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.25),
+        rgba(0,0,0,0.15) 40%,
+        rgba(0,0,0,0.35)
+      );
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
       z-index: 1;
     }
 
@@ -160,7 +217,6 @@
       padding: 12px 20px;
       font-size: 16px;
       cursor: pointer;
-      font-family: 'Playfair Display', serif;
     }
 
     /* Gift Registry parallax */
@@ -184,85 +240,6 @@
       box-shadow: 0 12px 34px rgba(0,0,0,0.5);
     }
 
-/* Registry brown box */
-/* Registry inner card styled like location footer card */
-.registry-card {
-background: #91452c;
-border-radius: 20px;
-padding: 32px 28px;
-max-width: 640px;
-margin: auto;
-text-align: center;
-box-shadow: 0 14px 36px rgba(0,0,0,0.28);
-}
-
-
-.registry-card h2 {
-margin-top: 0;
-margin-bottom: 12px;
-}
-
-
-.registry-card p {
-margin-bottom: 18px;
-}
-
-
-.registry-btn {
-padding: 10px 18px;
-border: none;
-border-radius: 10px;
-font-size: 15px;
-cursor: pointer;
-background: #fff;
-color: #91452c;
-font-weight: 600;
-}
-
-
-/* Popup */
-.popup-overlay {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.65);
-backdrop-filter: blur(4px);
-z-index: 2000;
-align-items: center;
-justify-content: center;
-}
-
-
-.popup-content {
-position: relative;
-max-width: 90%;
-max-height: 90%;
-}
-
-
-.popup-content img {
-width: 100%;
-border-radius: 16px;
-box-shadow: 0 14px 40px rgba(0,0,0,0.5);
-}
-
-
-.popup-close {
-position: absolute;
-top: -10px;
-right: -10px;
-background: #fff;
-color: #333;
-border-radius: 50%;
-width: 30px;
-height: 30px;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-font-size: 20px;
-}
-    
   </style>
 </head>
 
@@ -307,19 +284,28 @@ font-size: 20px;
   <!-- Gift Registry Parallax -->
   <section id="gifts" class="parallax">
     <div class="inner">
-      <h2>Gift Registry</h2>
-      <p>Your presence is already a gift. If you wish to give more, registry details will live here.</p>
+
+      <div class="registry-card">
+        <h2>Gift Registry</h2>
+
+        <p>
+          Your presence is already a gift. If you wish to give more, registry details will live here.
+        </p>
+
+        <button class="registry-btn" onclick="openRegistryPopup()">Thank You!</button>
+      </div>
+
     </div>
   </section>
 
   <!-- Registry Image Popup -->
-<div id="registryPopup" class="popup-overlay" onclick="closeRegistryPopup()">
-<div class="popup-content" onclick="event.stopPropagation()">
-<img src="https://placehold.co/800x1000" alt="Registry Placeholder" />
-<span class="popup-close" onclick="closeRegistryPopup()">×</span>
-</div>
-</div>
-  
+  <div id="registryPopup" class="popup-overlay" onclick="closeRegistryPopup()">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <img src="https://placehold.co/800x1000" alt="Registry Placeholder" />
+      <span class="popup-close" onclick="closeRegistryPopup()">×</span>
+    </div>
+  </div>
+
   <!-- Celebration Reminders -->
   <section id="reminders" class="content">
     <h2>Celebration Reminders</h2>
@@ -343,7 +329,7 @@ font-size: 20px;
       </iframe>
     </div>
 
-    <p>Questions? Contact Kath or Anjo at <strong>09123456789</strong></p>
+    <p>Questions? Contact Kath at <strong>09123456789</strong></p>
   </footer>
 
   <script>
@@ -359,7 +345,7 @@ font-size: 20px;
       const lastName = lastInput.value.trim().replace(/\s+/g, " ");
 
       if (!firstName || !lastName) {
-        message.innerText = "Please enter both First and Last name.";
+        message.innerText = "Please enter both first and last name.";
         return;
       }
 
@@ -380,6 +366,14 @@ font-size: 20px;
       .catch(() => {
         message.innerText = "Something went wrong. Please try again.";
       });
+    }
+
+    function openRegistryPopup() {
+      document.getElementById('registryPopup').style.display = 'flex';
+    }
+
+    function closeRegistryPopup() {
+      document.getElementById('registryPopup').style.display = 'none';
     }
 
     function adminAccess() {
