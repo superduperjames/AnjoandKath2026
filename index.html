@@ -209,96 +209,90 @@
   <div class="admin" id="adminAccess">admin</div>
 </section>
 
-
-<section id="registry">
-  <h2>Gift Registry</h2>
-  <p>Registry links and gift notes go here.</p>
-</section>
-
-<section id="reminders">
-  <h2>Celebration Reminders</h2>
-  <p>Dress code, timing, gentle reminders.</p>
-</section>
-
-<section id="location">
-  <h2>Location</h2>
-  <p>Ceremony and reception details.</p>
-</section>
-
-<footer></footer>
-
 <script>
-  /* FADE-IN OBSERVER */
-  const sections = document.querySelectorAll('section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.15 });
-
-  sections.forEach(section => observer.observe(section));
-
-  /* RSVP */
   const form = document.getElementById('rsvpForm');
   const message = document.getElementById('formMessage');
+  const guestInputs = document.getElementById('guestInputs');
+  const guestSelect = document.getElementById('guests');
 
+  // Dynamic plus-one inputs
+  guestSelect.addEventListener('change', () => {
+    const num = parseInt(guestSelect.value);
+    const currentInputs = guestInputs.querySelectorAll('input').length;
+
+    if (num > currentInputs) {
+      for (let i = currentInputs; i < num; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'guestNames';
+        input.placeholder = `Full Name of Guest ${i + 1}`;
+        input.required = true;
+        guestInputs.appendChild(input);
+      }
+    } else if (num < currentInputs) {
+      for (let i = currentInputs - 1; i >= num; i--) {
+        guestInputs.removeChild(guestInputs.children[i]);
+      }
+    }
+  });
+
+  // Replace this with your deployed Web App URL
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzf2bk_smVuI2koR3vJf_UkTrUxRfX4Zm6OFTdQSc6qzn_vQcYkJXQqlgcW4MmlaaRbfQ/exec';
 
   form.addEventListener('submit', async e => {
-  e.preventDefault();
-  message.textContent = 'Submitting…';
-  message.style.color = '#333';
+    e.preventDefault();
+    message.textContent = 'Submitting…';
+    message.style.color = '#333';
 
-  try {
-    // Grab all guest names
-    const guestInputsArray = Array.from(document.querySelectorAll('input[name="guestNames"]'));
-    const guestNames = guestInputsArray.map(input => input.value.trim()).filter(n => n !== '');
+    try {
+      const guestNamesArray = Array.from(document.querySelectorAll('input[name="guestNames"]'))
+                                   .map(input => input.value.trim())
+                                   .filter(n => n !== '');
 
-    if (guestNames.length === 0) {
-      message.textContent = 'Please enter at least one name.';
+      if (guestNamesArray.length === 0) {
+        message.textContent = 'Please enter at least one name.';
+        message.style.color = 'red';
+        return;
+      }
+
+      const payload = { guestNames: guestNamesArray };
+
+      const res = await fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error('Network response was not ok');
+
+      const result = await res.json();
+
+      if (result.status === 'duplicate') {
+        message.textContent = `Duplicate entry: ${result.names.join(', ')}. Please check your names.`;
+        message.style.color = 'red';
+      } else {
+        message.textContent = 'Thank you for your RSVP!';
+        message.style.color = 'green';
+        form.reset();
+        guestInputs.innerHTML = `<input type="text" name="guestNames" placeholder="Full Name" required />`;
+        guestSelect.value = '1';
+      }
+
+    } catch (err) {
+      console.error(err);
+      message.textContent = 'Error submitting RSVP. Please try again.';
       message.style.color = 'red';
-      return;
     }
+  });
 
-    const payload = { guestNames };
-
-    const res = await fetch(scriptURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (!res.ok) throw new Error('Network response was not ok');
-
-    const result = await res.json();
-
-    if (result.status === 'duplicate') {
-      message.textContent = 'This name has already been submitted.';
-      message.style.color = 'red';
-    } else {
-      message.textContent = 'Thank you for your RSVP!';
-      message.style.color = 'green';
-      form.reset();
-      // Reset to 1 guest input
-      guestInputs.innerHTML = `<input type="text" name="guestNames" placeholder="Full Name" required />`;
-    }
-
-  } catch (err) {
-    console.error(err);
-    message.textContent = 'Error submitting RSVP. Please try again.';
-    message.style.color = 'red';
-  }
-});
-
-  /* ADMIN ACCESS */
+  // Admin button (almost hidden)
   document.getElementById('adminAccess').addEventListener('click', () => {
     const password = prompt('Admin password');
     if (password === 'password123') {
-      window.open('https://docs.google.com/spreadsheets/d/1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit?gid=802293615#gid=802293615', '_blank');
+      window.open('https://docs.google.com/spreadsheets/d//1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit#gid=0', '_blank');
     }
   });
+
 
   // Dynamically add/remove guest name inputs
 const guestSelect = document.getElementById('guests');
