@@ -197,32 +197,32 @@ text-align: center;
     }
 
     /* Mobile fallback: disable fixed parallax where unsupported */
-    @media (max-width: 900px) {
-      .parallax {
-        background-attachment: scroll;
-        height: 70vh;
-      }
+@media (max-width: 900px) {
+.parallax {
+background-attachment: scroll;
+height: 70vh;
+}
 
 
     /* Center RSVP on mobile */
 #rsvp .rsvp-form {
-margin: 0 auto;
+margin: 8%;
 text-align: center;
+  max-width:315px;
 }
-
 
 /* Hide navigation on mobile */
 nav {
 display: none;
 }
 
-
 /* Different hero image for mobile */
 #home {
-background-image: url("https://placehold.co/800x1400");
+background-image: url("https://placehold.co/800x1400") !important;
+  height:600px !important;
 }
 }
-}
+
 
     .parallax .inner {
       padding: 20px;
@@ -319,7 +319,7 @@ footer p {
   margin-top: 16px;
   font-size: 16px;
   background:rgba(170,117,77,0.5);
-  color:#333333;
+  color:white;
 }
 
 
