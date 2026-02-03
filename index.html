@@ -266,6 +266,7 @@ text-align: center;
   color: #eee;
   padding: 80px 20px;
   text-align: center;
+  min-height: 120vh;
 }
 
 /* The moving background */
@@ -493,7 +494,7 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
     const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
 
     // Adjust multiplier for strength
-    const translateY = (progress - 0.5) * 80;
+    const translateY = (progress - 0.5) * 200;
 
     bg.style.transform = `translateY(${translateY}px)`;
   }
