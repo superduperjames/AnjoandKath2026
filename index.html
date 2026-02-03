@@ -167,7 +167,10 @@
   document.getElementById('adminAccess').addEventListener('click', () => {
     const password = prompt('Admin password');
     if (password === 'password123') {
-      window.open('https://docs.google.com/spreadsheets/d/1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit?gid=802293615#gid=802293615', '_blank');
+window.open(
+  'https://docs.google.com/spreadsheets/d/1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit#gid=802293615',
+  '_blank'
+);
     }
   });
 </script>
