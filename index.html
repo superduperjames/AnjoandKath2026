@@ -5,11 +5,10 @@
   <title>Our Wedding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Font -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* RESET */
     * {
       margin: 0;
       padding: 0;
@@ -22,7 +21,7 @@
       color: #333;
     }
 
-    /* STICKY NAV */
+    /* NAV */
     nav {
       position: sticky;
       top: 0;
@@ -34,22 +33,20 @@
     nav ul {
       display: flex;
       justify-content: center;
+      gap: 20px;
       list-style: none;
-      padding: 16px;
-      gap: 24px;
+      padding: 14px;
+      flex-wrap: wrap;
     }
 
     nav a {
       text-decoration: none;
       color: #333;
+      font-size: 14px;
       font-weight: 500;
     }
 
-    nav a:hover {
-      color: #a67c52;
-    }
-
-    /* HERO / PARALLAX HEADER */
+    /* HERO */
     header {
       height: 100vh;
       background-image: url('images/hero.jpg');
@@ -59,8 +56,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
       color: white;
+      text-align: center;
+      position: relative;
     }
 
     header::after {
@@ -73,16 +71,17 @@
     .hero-content {
       position: relative;
       z-index: 2;
+      padding: 20px;
     }
 
     .hero-content h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 64px;
-      margin-bottom: 16px;
+      font-size: clamp(42px, 8vw, 64px);
+      margin-bottom: 12px;
     }
 
     .hero-content p {
-      font-size: 20px;
+      font-size: 18px;
       letter-spacing: 2px;
     }
 
@@ -91,11 +90,19 @@
       padding: 80px 20px;
       max-width: 900px;
       margin: auto;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     section h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 36px;
+      font-size: clamp(28px, 6vw, 36px);
       margin-bottom: 24px;
       text-align: center;
     }
@@ -103,20 +110,23 @@
     section p {
       line-height: 1.8;
       text-align: center;
+      font-size: 16px;
     }
 
     /* RSVP FORM */
     form {
-      max-width: 400px;
+      max-width: 420px;
       margin: 40px auto 0;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
-    input, button {
+    input, select, button {
       padding: 14px;
       font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
 
     button {
@@ -136,7 +146,20 @@
       font-weight: 500;
     }
 
-    /* FOOTER SPACE */
+    /* ADMIN LINK (almost hidden) */
+    .admin {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #bbb;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .admin:hover {
+      color: #888;
+    }
+
     footer {
       height: 120px;
     }
@@ -145,98 +168,117 @@
 
 <body>
 
-  <!-- NAVIGATION -->
-  <nav>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#rsvp">RSVP</a></li>
-      <li><a href="#registry">Gift Registry</a></li>
-      <li><a href="#reminders">Celebration Reminders</a></li>
-      <li><a href="#location">Location</a></li>
-    </ul>
-  </nav>
+<nav>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#rsvp">RSVP</a></li>
+    <li><a href="#registry">Gift Registry</a></li>
+    <li><a href="#reminders">Celebration Reminders</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+</nav>
 
-  <!-- HERO -->
-  <header id="home">
-    <div class="hero-content">
-      <h1>Alex & Jamie</h1>
-      <p>Are Getting Married</p>
-    </div>
-  </header>
+<header id="home">
+  <div class="hero-content">
+    <h1>Alex & Jamie</h1>
+    <p>Are Getting Married</p>
+  </div>
+</header>
 
-  <!-- RSVP -->
-  <section id="rsvp">
-    <h2>RSVP</h2>
-    <p>Please let us know if you can celebrate with us.</p>
+<section id="rsvp">
+  <h2>RSVP</h2>
+  <p>Please let us know if you can celebrate with us.</p>
 
-    <form id="rsvpForm">
-      <input type="text" id="fullName" placeholder="Full Name" required />
-      <button type="submit">Submit RSVP</button>
-    </form>
+  <form id="rsvpForm">
+    <input type="text" id="fullName" placeholder="Full Name" required />
 
-    <div class="message" id="formMessage"></div>
-  </section>
+    <select id="guests">
+      <option value="1">1 Guest</option>
+      <option value="2">2 Guests</option>
+      <option value="3">3 Guests</option>
+      <option value="4">4 Guests</option>
+      <option value="5">5 Guests</option>
+    </select>
 
-  <!-- REGISTRY -->
-  <section id="registry">
-    <h2>Gift Registry</h2>
-    <p>
-      Placeholder text for registry details.
-      You can link Amazon, Honeyfund, or anything else here.
-    </p>
-  </section>
+    <button type="submit">Submit RSVP</button>
+  </form>
 
-  <!-- REMINDERS -->
-  <section id="reminders">
-    <h2>Celebration Reminders</h2>
-    <p>
-      Dress code, timing notes, reminders to bring tissues, etc.
-    </p>
-  </section>
+  <div class="message" id="formMessage"></div>
 
-  <!-- LOCATION -->
-  <section id="location">
-    <h2>Location</h2>
-    <p>
-      Ceremony and reception details go here.
-      Embed Google Maps later if you want.
-    </p>
-  </section>
+  <div class="admin" id="adminAccess">admin</div>
+</section>
 
-  <footer></footer>
+<section id="registry">
+  <h2>Gift Registry</h2>
+  <p>Registry links and gift notes go here.</p>
+</section>
 
-  <!-- RSVP SCRIPT -->
-  <script>
-    const form = document.getElementById('rsvpForm');
-    const message = document.getElementById('formMessage');
+<section id="reminders">
+  <h2>Celebration Reminders</h2>
+  <p>Dress code, timing, gentle reminders.</p>
+</section>
 
-    // 🔴 Replace with your Google Apps Script Web App URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzf2bk_smVuI2koR3vJf_UkTrUxRfX4Zm6OFTdQSc6qzn_vQcYkJXQqlgcW4MmlaaRbfQ/exec';
+<section id="location">
+  <h2>Location</h2>
+  <p>Ceremony and reception details.</p>
+</section>
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      message.textContent = 'Submitting…';
+<footer></footer>
 
-      const name = document.getElementById('fullName').value.trim();
-
-      const response = await fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify({ name }),
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      const result = await response.json();
-
-      if (result.status === 'duplicate') {
-        message.textContent = 'This name has already been submitted.';
-        message.style.color = 'red';
-      } else {
-        message.textContent = 'Thank you for your RSVP!';
-        message.style.color = 'green';
-        form.reset();
+<script>
+  /* FADE-IN OBSERVER */
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
       }
     });
-  </script>
+  }, { threshold: 0.15 });
+
+  sections.forEach(section => observer.observe(section));
+
+  /* RSVP */
+  const form = document.getElementById('rsvpForm');
+  const message = document.getElementById('formMessage');
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzf2bk_smVuI2koR3vJf_UkTrUxRfX4Zm6OFTdQSc6qzn_vQcYkJXQqlgcW4MmlaaRbfQ/exec';
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    message.textContent = 'Submitting…';
+
+    const payload = {
+      name: document.getElementById('fullName').value.trim(),
+      guests: document.getElementById('guests').value
+    };
+
+    const res = await fetch(scriptURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+
+    if (result.status === 'duplicate') {
+      message.textContent = 'This name has already been submitted.';
+      message.style.color = 'red';
+    } else {
+      message.textContent = 'Thank you for your RSVP!';
+      message.style.color = 'green';
+      form.reset();
+    }
+  });
+
+  /* ADMIN ACCESS */
+  document.getElementById('adminAccess').addEventListener('click', () => {
+    const password = prompt('Admin password');
+    if (password === 'password123') {
+      window.open('https://docs.google.com/spreadsheets/d/1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit?gid=802293615#gid=802293615', '_blank');
+    }
+  });
+</script>
 
 </body>
 </html>
