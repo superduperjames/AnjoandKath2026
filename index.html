@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Wedding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+    }
+
+    /* STICKY NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #eee;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 16px;
+      gap: 24px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #a67c52;
+    }
+
+    /* HERO / PARALLAX HEADER */
+    header {
+      height: 100vh;
+      background-image: url('images/hero.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .hero-content p {
+      font-size: 20px;
+      letter-spacing: 2px;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 80px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    section p {
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    /* RSVP FORM */
+    form {
+      max-width: 400px;
+      margin: 40px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    input, button {
+      padding: 14px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #a67c52;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #8d6845;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 16px;
+      font-weight: 500;
+    }
+
+    /* FOOTER SPACE */
+    footer {
+      height: 120px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#rsvp">RSVP</a></li>
+      <li><a href="#registry">Gift Registry</a></li>
+      <li><a href="#reminders">Celebration Reminders</a></li>
+      <li><a href="#location">Location</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home">
+    <div class="hero-content">
+      <h1>Alex & Jamie</h1>
+      <p>Are Getting Married</p>
+    </div>
+  </header>
+
+  <!-- RSVP -->
+  <section id="rsvp">
+    <h2>RSVP</h2>
+    <p>Please let us know if you can celebrate with us.</p>
+
+    <form id="rsvpForm">
+      <input type="text" id="fullName" placeholder="Full Name" required />
+      <button type="submit">Submit RSVP</button>
+    </form>
+
+    <div class="message" id="formMessage"></div>
+  </section>
+
+  <!-- REGISTRY -->
+  <section id="registry">
+    <h2>Gift Registry</h2>
+    <p>
+      Placeholder text for registry details.
+      You can link Amazon, Honeyfund, or anything else here.
+    </p>
+  </section>
+
+  <!-- REMINDERS -->
+  <section id="reminders">
+    <h2>Celebration Reminders</h2>
+    <p>
+      Dress code, timing notes, reminders to bring tissues, etc.
+    </p>
+  </section>
+
+  <!-- LOCATION -->
+  <section id="location">
+    <h2>Location</h2>
+    <p>
+      Ceremony and reception details go here.
+      Embed Google Maps later if you want.
+    </p>
+  </section>
+
+  <footer></footer>
+
+  <!-- RSVP SCRIPT -->
+  <script>
+    const form = document.getElementById('rsvpForm');
+    const message = document.getElementById('formMessage');
+
+    // 🔴 Replace with your Google Apps Script Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzf2bk_smVuI2koR3vJf_UkTrUxRfX4Zm6OFTdQSc6qzn_vQcYkJXQqlgcW4MmlaaRbfQ/exec';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      message.textContent = 'Submitting…';
+
+      const name = document.getElementById('fullName').value.trim();
+
+      const response = await fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({ name }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'duplicate') {
+        message.textContent = 'This name has already been submitted.';
+        message.style.color = 'red';
+      } else {
+        message.textContent = 'Thank you for your RSVP!';
+        message.style.color = 'green';
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
