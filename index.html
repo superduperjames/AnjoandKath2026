@@ -259,46 +259,28 @@ text-align: center;
       background-image: url("https://res.cloudinary.com/dzjdhooce/image/upload/v1770139164/2148370123_ognokd.jpg");
     }
 
-.parallax-footer {
-  position: relative;
-  overflow: hidden;
-  color: #eee;
-  padding: 80px 20px;
-  text-align: center;
+/* Footer style location */
+footer {
+color: #fff;
+padding: 80px 20px;
+text-align: center;
 }
 
-/* The moving background */
-.parallax-bg {
-  position: absolute;
-  inset: -20%;
-  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
-  background-size: cover;
-  background-position: center;
-  will-change: transform;
-  z-index: 0;
+
+/* Parallax background for footer */
+#location.parallax {
+background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
 }
 
-/* Keep content above background */
-.footer-content {
-  position: relative;
-  z-index: 1;
-}
 
-/* Your existing styles */
 .map-container {
-  max-width: 900px;
-  margin: 0 auto 24px;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 12px 34px rgba(0,0,0,0.5);
+max-width: 900px;
+margin: 0 auto 24px;
+border-radius: 14px;
+overflow: hidden;
+box-shadow: 0 12px 34px rgba(0,0,0,0.5);
 }
 
-footer p {
-  margin-top: 16px;
-  font-size: 16px;
-}
-
-    
   </style>
 </head>
 
@@ -398,25 +380,21 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
 </div>
   
 
-  <!-- Location Footer -->
-<footer id="location" class="parallax-footer">
-  <div class="parallax-bg"></div>
+<!-- Location Footer -->
+<footer id="location" class="parallax">
+<h2>Location</h2>
 
-  <div class="footer-content">
-    <div class="map-container">
-      <!-- Replace the src with your Google Maps embed link -->
-      <iframe
-        src="https://www.google.com/maps?q=Manila&output=embed"
-        width="100%"
-        height="350"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy">
-      </iframe>
-    </div>
-    <p>Your footer text here</p>
-  </div>
-</footer>
+
+<div class="map-container">
+<iframe
+src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2NIWI3Tv9iDPrlnowr_0ZqZWoAQydKJU&q=Max's%20Restaurant%2C%20Sucat%20Road%2C%20San%20Antonio%2C%20Para%C3%B1aque%2C%20Metro%20Manila%2C%20Philippines&maptype=roadmap"
+width="100%"
+height="360"
+style="border:0;"
+allowfullscreen=""
+loading="lazy">
+</iframe>
+</div>
 
     <p>Questions? Contact Kath at <strong>09123456789</strong></p>
   </footer>
@@ -479,29 +457,6 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
       }
     }
   </script>
-
-  <script>
-  const footer = document.querySelector('.parallax-footer');
-  const bg = footer.querySelector('.parallax-bg');
-
-  function updateParallax() {
-    const rect = footer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // How far the footer is through the viewport (0 → 1)
-    const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-
-    // Adjust multiplier for strength
-    const translateY = (progress - 0.5) * 80;
-
-    bg.style.transform = `translateY(${translateY}px)`;
-  }
-
-  window.addEventListener('scroll', updateParallax, { passive: true });
-  window.addEventListener('resize', updateParallax);
-  updateParallax();
-</script>
-
 
 </body>
 </html>
