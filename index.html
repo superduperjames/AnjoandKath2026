@@ -259,31 +259,45 @@ text-align: center;
       background-image: url("https://res.cloudinary.com/dzjdhooce/image/upload/v1770139164/2148370123_ognokd.jpg");
     }
 
-    /* Footer Location */
-  footer {
-     background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
-      color: #eee;
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-
-/* Parallax background for footer */
-#location.parallax {
-background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+.parallax-footer {
+  position: relative;
+  overflow: hidden;
+  color: #eee;
+  padding: 80px 20px;
+  text-align: center;
 }
 
+/* The moving background */
+.parallax-bg {
+  position: absolute;
+  inset: -20%;
+  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  z-index: 0;
+}
+
+/* Keep content above background */
+.footer-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Your existing styles */
 .map-container {
-max-width: 900px;
-margin: 0 auto 24px;
-border-radius: 14px;
-overflow: hidden;
-box-shadow: 0 12px 34px rgba(0,0,0,0.5);
+  max-width: 900px;
+  margin: 0 auto 24px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.5);
 }
+
 footer p {
-      margin-top: 16px;
-      font-size: 16px;
+  margin-top: 16px;
+  font-size: 16px;
 }
+
     
   </style>
 </head>
@@ -385,9 +399,10 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
   
 
   <!-- Location Footer -->
-  <footer id="location">
-    <h2>Location</h2>
+<footer id="location" class="parallax-footer">
+  <div class="parallax-bg"></div>
 
+  <div class="footer-content">
     <div class="map-container">
       <!-- Replace the src with your Google Maps embed link -->
       <iframe
@@ -399,6 +414,9 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
         loading="lazy">
       </iframe>
     </div>
+    <p>Your footer text here</p>
+  </div>
+</footer>
 
     <p>Questions? Contact Kath at <strong>09123456789</strong></p>
   </footer>
@@ -461,6 +479,29 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
       }
     }
   </script>
+
+  <script>
+  const footer = document.querySelector('.parallax-footer');
+  const bg = footer.querySelector('.parallax-bg');
+
+  function updateParallax() {
+    const rect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // How far the footer is through the viewport (0 → 1)
+    const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+
+    // Adjust multiplier for strength
+    const translateY = (progress - 0.5) * 80;
+
+    bg.style.transform = `translateY(${translateY}px)`;
+  }
+
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  window.addEventListener('resize', updateParallax);
+  updateParallax();
+</script>
+
 
 </body>
 </html>
