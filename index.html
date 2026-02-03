@@ -260,19 +260,45 @@ text-align: center;
     }
 
     /* Footer style location */
-    footer {
-      background: #d9a1a0;
-      color: #eee;
-      padding: 80px 20px;
-      text-align: center;
-    }
+.parallax-footer {
+  position: relative;
+  overflow: hidden;
+  color: #eee;
+  padding: 80px 20px;
+  text-align: center;
+}
 
-    .map-container {
-      max-width: 900px;
-      margin: 0 auto 24px;
-      border-radius: 14px;
-      overflow: hidden;
-    }
+/* The moving background */
+.parallax-bg {
+  position: absolute;
+  inset: -20%;
+  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  z-index: 0;
+}
+
+/* Keep content above background */
+.footer-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Your existing styles */
+.map-container {
+  max-width: 900px;
+  margin: 0 auto 24px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.5);
+}
+
+footer p {
+  margin-top: 16px;
+  font-size: 16px;
+}
+
 
   </style>
 </head>
@@ -374,9 +400,10 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
   
 
   <!-- Location Footer -->
-  <footer id="location">
-    <h2>Location</h2>
+<footer id="location" class="parallax-footer">
+  <div class="parallax-bg"></div>
 
+  <div class="footer-content">
     <div class="map-container">
       <iframe
         src="https://www.google.com/maps?q=Manila&output=embed"
@@ -389,8 +416,11 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
     </div>
 
     <p>Questions? Contact Kath at <strong>09123456789</strong></p>
+      </div>
   </footer>
 
+
+  
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn5bxUYo0WUI4Tq726G_PvjbHpiMWGaReGTt_c69QRqjtOkZ9Ua6hx1s-dBg9g3X5Y6Q/exec";
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/1qm_SbJVPNtdRdiOcfvWmR_i6Gnvfe2VlWhHvSRuRPl8/edit?gid=0#gid=0";
@@ -451,5 +481,28 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
     }
   </script>
 
+  <script>
+  const footer = document.querySelector('.parallax-footer');
+  const bg = footer.querySelector('.parallax-bg');
+
+  function updateParallax() {
+    const rect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // How far the footer is through the viewport (0 → 1)
+    const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+
+    // Adjust multiplier for strength
+    const translateY = (progress - 0.5) * 80;
+
+    bg.style.transform = `translateY(${translateY}px)`;
+  }
+
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  window.addEventListener('resize', updateParallax);
+  updateParallax();
+</script>
+
+  
 </body>
 </html>
