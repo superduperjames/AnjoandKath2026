@@ -9,163 +9,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; color: #333; }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      color: #333;
-    }
+    nav { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); border-bottom: 1px solid #eee; }
+    nav ul { display: flex; justify-content: center; gap: 20px; list-style: none; padding: 14px; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: #333; font-size: 14px; font-weight: 500; }
 
-    /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.95);
-      border-bottom: 1px solid #eee;
-    }
+    header { height: 100vh; background-image: url('images/hero.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; align-items: center; justify-content: center; color: white; text-align: center; position: relative; }
+    header::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
+    .hero-content { position: relative; z-index: 2; padding: 20px; }
+    .hero-content h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 8vw, 64px); margin-bottom: 12px; }
+    .hero-content p { font-size: 18px; letter-spacing: 2px; }
 
-    nav ul {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      list-style: none;
-      padding: 14px;
-      flex-wrap: wrap;
-    }
+    section { padding: 80px 20px; max-width: 900px; margin: auto; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    section.visible { opacity: 1; transform: translateY(0); }
+    section h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 36px); margin-bottom: 24px; text-align: center; }
+    section p { line-height: 1.8; text-align: center; font-size: 16px; }
 
-    nav a {
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    /* HERO */
-    header {
-      height: 100vh;
-      background-image: url('images/hero.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      position: relative;
-    }
-
-    header::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 20px;
-    }
-
-    .hero-content h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(42px, 8vw, 64px);
-      margin-bottom: 12px;
-    }
-
-    .hero-content p {
-      font-size: 18px;
-      letter-spacing: 2px;
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 80px 20px;
-      max-width: 900px;
-      margin: auto;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 6vw, 36px);
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    section p {
-      line-height: 1.8;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    /* RSVP FORM */
-    form {
-      max-width: 420px;
-      margin: 40px auto 0;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    input, select, button {
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      background: #a67c52;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #8d6845;
-    }
-
-    .message {
-      text-align: center;
-      margin-top: 16px;
-      font-weight: 500;
-    }
-
-    /* ADMIN LINK (almost hidden) */
-    .admin {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 12px;
-      color: #bbb;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .admin:hover {
-      color: #888;
-    }
-
-    footer {
-      height: 120px;
-    }
+    form { max-width: 420px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 14px; }
+    input, select, button { padding: 14px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; }
+    button { background: #a67c52; color: white; border: none; cursor: pointer; }
+    button:hover { background: #8d6845; }
+    .message { text-align: center; margin-top: 16px; font-weight: 500; }
+    .admin { margin-top: 30px; text-align: center; font-size: 12px; color: #bbb; cursor: pointer; user-select: none; }
+    .admin:hover { color: #888; }
+    footer { height: 120px; }
   </style>
 </head>
-
 <body>
 
 <nav>
@@ -210,12 +81,18 @@
 </section>
 
 <script>
-  const form = document.getElementById('rsvpForm');
-  const message = document.getElementById('formMessage');
+  // FADE-IN SECTIONS
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  sections.forEach(s => observer.observe(s));
+
+  // DYNAMIC PLUS-ONE INPUTS
   const guestInputs = document.getElementById('guestInputs');
   const guestSelect = document.getElementById('guests');
-
-  // Dynamic plus-one inputs
   guestSelect.addEventListener('change', () => {
     const num = parseInt(guestSelect.value);
     const currentInputs = guestInputs.querySelectorAll('input').length;
@@ -236,8 +113,10 @@
     }
   });
 
-  // Replace this with your deployed Web App URL
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzf2bk_smVuI2koR3vJf_UkTrUxRfX4Zm6OFTdQSc6qzn_vQcYkJXQqlgcW4MmlaaRbfQ/exec';
+  // RSVP FORM SUBMISSION
+  const form = document.getElementById('rsvpForm');
+  const message = document.getElementById('formMessage');
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxgZiHrAJSnvsTVtSfSKQaZzhQmPsYNtncBCDlN7A0tqQzKjei8Vw06Z74samxor8p4Yw/exec'; // replace with deployed Apps Script URL
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -246,9 +125,8 @@
 
     try {
       const guestNamesArray = Array.from(document.querySelectorAll('input[name="guestNames"]'))
-                                   .map(input => input.value.trim())
+                                   .map(i => i.value.trim())
                                    .filter(n => n !== '');
-
       if (guestNamesArray.length === 0) {
         message.textContent = 'Please enter at least one name.';
         message.style.color = 'red';
@@ -285,43 +163,13 @@
     }
   });
 
-  // Admin button (almost hidden)
+  // ADMIN LINK
   document.getElementById('adminAccess').addEventListener('click', () => {
     const password = prompt('Admin password');
     if (password === 'password123') {
-      window.open('https://docs.google.com/spreadsheets/d//1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit#gid=0', '_blank');
+      window.open('https://docs.google.com/spreadsheets/d/1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit?gid=802293615#gid=802293615', '_blank');
     }
   });
-
-
-  // Dynamically add/remove guest name inputs
-const guestSelect = document.getElementById('guests');
-const guestInputs = document.getElementById('guestInputs');
-
-guestSelect.addEventListener('change', () => {
-  const num = parseInt(guestSelect.value);
-  const currentInputs = guestInputs.querySelectorAll('input').length;
-
-  // Add extra inputs if needed
-  if (num > currentInputs) {
-    for (let i = currentInputs; i < num; i++) {
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.name = 'guestNames';
-      input.placeholder = `Full Name of Guest ${i + 1}`;
-      input.required = true;
-      guestInputs.appendChild(input);
-    }
-  }
-
-  // Remove extra inputs if needed
-  if (num < currentInputs) {
-    for (let i = currentInputs - 1; i >= num; i--) {
-      guestInputs.removeChild(guestInputs.children[i]);
-    }
-  }
-});
-
 </script>
 
 </body>
