@@ -247,19 +247,30 @@
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzf2bk_smVuI2koR3vJf_UkTrUxRfX4Zm6OFTdQSc6qzn_vQcYkJXQqlgcW4MmlaaRbfQ/exec';
 
   form.addEventListener('submit', async e => {
-    e.preventDefault();
-    message.textContent = 'Submitting…';
+  e.preventDefault();
+  message.textContent = 'Submitting…';
+  message.style.color = '#333';
 
-    const payload = {
-      name: document.getElementById('fullName').value.trim(),
-      guests: document.getElementById('guests').value
-    };
+  try {
+    // Grab all guest names
+    const guestInputsArray = Array.from(document.querySelectorAll('input[name="guestNames"]'));
+    const guestNames = guestInputsArray.map(input => input.value.trim()).filter(n => n !== '');
+
+    if (guestNames.length === 0) {
+      message.textContent = 'Please enter at least one name.';
+      message.style.color = 'red';
+      return;
+    }
+
+    const payload = { guestNames };
 
     const res = await fetch(scriptURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
+
+    if (!res.ok) throw new Error('Network response was not ok');
 
     const result = await res.json();
 
@@ -270,8 +281,16 @@
       message.textContent = 'Thank you for your RSVP!';
       message.style.color = 'green';
       form.reset();
+      // Reset to 1 guest input
+      guestInputs.innerHTML = `<input type="text" name="guestNames" placeholder="Full Name" required />`;
     }
-  });
+
+  } catch (err) {
+    console.error(err);
+    message.textContent = 'Error submitting RSVP. Please try again.';
+    message.style.color = 'red';
+  }
+});
 
   /* ADMIN ACCESS */
   document.getElementById('adminAccess').addEventListener('click', () => {
