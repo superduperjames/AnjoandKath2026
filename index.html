@@ -184,6 +184,44 @@
       box-shadow: 0 12px 34px rgba(0,0,0,0.5);
     }
 
+    /* Registry brown box */
+backdrop-filter: blur(4px);
+z-index: 2000;
+align-items: center;
+justify-content: center;
+}
+
+
+.popup-content {
+position: relative;
+max-width: 90%;
+max-height: 90%;
+}
+
+
+.popup-content img {
+width: 100%;
+border-radius: 16px;
+box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+}
+
+
+.popup-close {
+position: absolute;
+top: -10px;
+right: -10px;
+background: #fff;
+color: #333;
+border-radius: 50%;
+width: 30px;
+height: 30px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+font-size: 20px;
+}
+    
   </style>
 </head>
 
@@ -233,6 +271,14 @@
     </div>
   </section>
 
+  <!-- Registry Image Popup -->
+<div id="registryPopup" class="popup-overlay" onclick="closeRegistryPopup()">
+<div class="popup-content" onclick="event.stopPropagation()">
+<img src="https://placehold.co/800x1000" alt="Registry Placeholder" />
+<span class="popup-close" onclick="closeRegistryPopup()">×</span>
+</div>
+</div>
+  
   <!-- Celebration Reminders -->
   <section id="reminders" class="content">
     <h2>Celebration Reminders</h2>
@@ -256,7 +302,7 @@
       </iframe>
     </div>
 
-    <p>Questions? Contact Kath at <strong>09123456789</strong></p>
+    <p>Questions? Contact Kath or Anjo at <strong>09123456789</strong></p>
   </footer>
 
   <script>
@@ -272,7 +318,7 @@
       const lastName = lastInput.value.trim().replace(/\s+/g, " ");
 
       if (!firstName || !lastName) {
-        message.innerText = "Please enter both first and last name.";
+        message.innerText = "Please enter both First and Last name.";
         return;
       }
 
@@ -283,9 +329,9 @@
       .then(res => res.json())
       .then(data => {
         if (data.status === "exists") {
-          alert("This name has already RSVP’d.");
+          alert("This name already exists!");
         } else {
-          message.innerText = "Thank you for your RSVP!";
+          message.innerText = "Thank you! We can't wait to celebrate with you!";
           firstInput.value = "";
           lastInput.value = "";
         }
