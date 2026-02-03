@@ -9,7 +9,7 @@
     /* Registry brown box */
     /* Registry inner card styled like location footer card */
     .registry-card {
-      background: rgba(145,69,44,0.9);
+      background: rgba(199,124,99,0.9);
       border-radius: 20px;
       padding: 32px 28px;
       max-width: 640px;
@@ -81,6 +81,43 @@ box-shadow: 0 14px 40px rgba(0,0,0,0.5);
       font-size: 20px;
     }
 
+    /* Reminder layout */
+.reminder-row {
+display: flex;
+gap: 24px;
+align-items: center;
+max-width: 760px;
+margin: 0 auto;
+}
+
+
+.reminder-left {
+flex: 0 0 140px;
+text-align: center;
+}
+
+
+.reminder-thumb {
+width: 140px;
+height: 140px;
+object-fit: cover;
+border-radius: 14px;
+cursor: pointer;
+box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+.reminder-right {
+flex: 1;
+}
+
+
+@media (max-width: 720px) {
+.reminder-row {
+flex-direction: column;
+text-align: center;
+}
+}
     
     html, body {
       margin: 0;
@@ -224,7 +261,7 @@ box-shadow: 0 14px 40px rgba(0,0,0,0.5);
 
     /* Footer style location */
     footer {
-      background: #91452c;
+      background: #d9a1a0;
       color: #eee;
       padding: 80px 20px;
       text-align: center;
@@ -304,12 +341,37 @@ box-shadow: 0 14px 40px rgba(0,0,0,0.5);
   </div>
 
   <!-- Celebration Reminders -->
-  <section id="reminders" class="content">
-    <h2>Celebration Reminders</h2>
-    <p style="text-align:center;">
-      Think of the day as part wedding, part reunion, and part elegant excuse to eat dessert before dinner. A few helpful details live here to keep the adventure smooth and the laughter plentiful. Check below for some reminders on this special day.
-    </p>
-  </section>
+<section id="reminders" class="content">
+<h2>Celebration Reminders</h2>
+
+
+<p style="text-align:center; margin-bottom:32px;">
+Think of the day as part wedding, part reunion, and part elegant excuse to eat dessert before dinner. A few helpful details live here to keep the adventure smooth and the laughter plentiful. Check below for some reminders on this special day.
+</p>
+
+
+<div class="reminder-row">
+<div class="reminder-left">
+<img src="https://placehold.co/300x300" class="reminder-thumb" onclick="openReminderImage()" />
+</div>
+
+
+<div class="reminder-right">
+<h3>Gentle Note</h3>
+<p>One sweet sentence can live here to guide your guests with charm.</p>
+</div>
+</div>
+</section>
+
+
+<!-- Reminder Image Popup -->
+<div id="reminderPopup" class="popup-overlay" onclick="closeReminderImage()">
+<div class="popup-content" onclick="event.stopPropagation()">
+<img src="https://placehold.co/800x800" alt="Reminder Image" />
+<span class="popup-close" onclick="closeReminderImage()">×</span>
+</div>
+</div>
+  
 
   <!-- Location Footer -->
   <footer id="location">
@@ -372,6 +434,12 @@ box-shadow: 0 14px 40px rgba(0,0,0,0.5);
     function closeRegistryPopup() {
       document.getElementById('registryPopup').style.display = 'none';
     }
+    function openReminderImage() {
+      document.getElementById('reminderPopup').style.display = 'flex';
+    }
+    function closeReminderImage() {
+      document.getElementById('reminderPopup').style.display = 'none';
+}
 
     function adminAccess() {
       const pw = prompt("Enter admin password:");
