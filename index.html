@@ -190,7 +190,9 @@
   <p>Please let us know if you can celebrate with us.</p>
 
   <form id="rsvpForm">
-    <input type="text" id="fullName" placeholder="Full Name" required />
+    <div id="guestInputs">
+      <input type="text" name="guestNames" placeholder="Full Name" required />
+    </div>
 
     <select id="guests">
       <option value="1">1 Guest</option>
@@ -204,9 +206,9 @@
   </form>
 
   <div class="message" id="formMessage"></div>
-
   <div class="admin" id="adminAccess">admin</div>
 </section>
+
 
 <section id="registry">
   <h2>Gift Registry</h2>
@@ -278,6 +280,35 @@
       window.open('https://docs.google.com/spreadsheets/d/1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit?gid=802293615#gid=802293615', '_blank');
     }
   });
+
+  // Dynamically add/remove guest name inputs
+const guestSelect = document.getElementById('guests');
+const guestInputs = document.getElementById('guestInputs');
+
+guestSelect.addEventListener('change', () => {
+  const num = parseInt(guestSelect.value);
+  const currentInputs = guestInputs.querySelectorAll('input').length;
+
+  // Add extra inputs if needed
+  if (num > currentInputs) {
+    for (let i = currentInputs; i < num; i++) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.name = 'guestNames';
+      input.placeholder = `Full Name of Guest ${i + 1}`;
+      input.required = true;
+      guestInputs.appendChild(input);
+    }
+  }
+
+  // Remove extra inputs if needed
+  if (num < currentInputs) {
+    for (let i = currentInputs - 1; i >= num; i--) {
+      guestInputs.removeChild(guestInputs.children[i]);
+    }
+  }
+});
+
 </script>
 
 </body>
