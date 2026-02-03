@@ -3,177 +3,224 @@
 <head>
   <meta charset="UTF-8" />
   <title>Our Wedding</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-    body { font-family: 'Montserrat', sans-serif; color: #333; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-    nav { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); border-bottom: 1px solid #eee; }
-    nav ul { display: flex; justify-content: center; gap: 20px; list-style: none; padding: 14px; flex-wrap: wrap; }
-    nav a { text-decoration: none; color: #333; font-size: 14px; font-weight: 500; }
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      color: #333;
+    }
 
-    header { height: 100vh; background-image: url('images/hero.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; align-items: center; justify-content: center; color: white; text-align: center; position: relative; }
-    header::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
-    .hero-content { position: relative; z-index: 2; padding: 20px; }
-    .hero-content h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 8vw, 64px); margin-bottom: 12px; }
-    .hero-content p { font-size: 18px; letter-spacing: 2px; }
+    /* Sticky Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
 
-    section { padding: 80px 20px; max-width: 900px; margin: auto; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    section.visible { opacity: 1; transform: translateY(0); }
-    section h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 36px); margin-bottom: 24px; text-align: center; }
-    section p { line-height: 1.8; text-align: center; font-size: 16px; }
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #444;
+      font-weight: 600;
+    }
 
-    form { max-width: 420px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 14px; }
-    input, select, button { padding: 14px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; }
-    button { background: #a67c52; color: white; border: none; cursor: pointer; }
-    button:hover { background: #8d6845; }
-    .message { text-align: center; margin-top: 16px; font-weight: 500; }
-    .admin { margin-top: 30px; text-align: center; font-size: 12px; color: #bbb; cursor: pointer; user-select: none; }
-    .admin:hover { color: #888; }
-    footer { height: 120px; }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .admin-btn {
+      font-size: 12px;
+      opacity: 0.6;
+      cursor: pointer;
+    }
+
+    /* Parallax Header */
+    header {
+      height: 100vh;
+      background-image: url("https://images.unsplash.com/photo-1523438885200-e635ba2c371e");
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 64px;
+      margin: 0;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      font-size: 20px;
+      margin-top: 16px;
+    }
+
+    section {
+      padding: 100px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    section h2 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    /* RSVP */
+    .rsvp-form {
+      max-width: 400px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .rsvp-form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .rsvp-form button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      font-size: 14px;
+      color: #777;
+    }
   </style>
 </head>
+
 <body>
 
-<nav>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#rsvp">RSVP</a></li>
-    <li><a href="#registry">Gift Registry</a></li>
-    <li><a href="#reminders">Celebration Reminders</a></li>
-    <li><a href="#location">Location</a></li>
-  </ul>
-</nav>
-
-<header id="home">
-  <div class="hero-content">
-    <h1>Alex & Jamie</h1>
-    <p>Are Getting Married</p>
-  </div>
-</header>
-
-<section id="rsvp">
-  <h2>RSVP</h2>
-  <p>Please let us know if you can celebrate with us.</p>
-
-  <form id="rsvpForm">
-    <div id="guestInputs">
-      <input type="text" name="guestNames" placeholder="Full Name" required />
+  <!-- Navigation -->
+  <nav>
+    <div>
+      <a href="#home">Home</a>
+      <a href="#rsvp">RSVP</a>
+      <a href="#gifts">Gift Registry</a>
+      <a href="#reminders">Celebration Reminders</a>
+      <a href="#location">Location</a>
     </div>
+    <div class="admin-btn" onclick="adminAccess()">Admin</div>
+  </nav>
 
-    <select id="guests">
-      <option value="1">1 Guest</option>
-      <option value="2">2 Guests</option>
-      <option value="3">3 Guests</option>
-      <option value="4">4 Guests</option>
-      <option value="5">5 Guests</option>
-    </select>
+  <!-- Parallax Header -->
+  <header id="home">
+    <div>
+      <h1>Alex & Jamie</h1>
+      <p>We’re getting married</p>
+    </div>
+  </header>
 
-    <button type="submit">Submit RSVP</button>
-  </form>
+  <!-- RSVP -->
+  <section id="rsvp">
+    <h2>RSVP</h2>
+<div class="rsvp-form">
+  <input type="text" id="firstName" placeholder="First Name" />
+  <input type="text" id="lastName" placeholder="Last Name" />
+  <button onclick="submitRSVP()">Submit RSVP</button>
+  <p id="rsvp-message"></p>
+</div>
 
-  <div class="message" id="formMessage"></div>
-  <div class="admin" id="adminAccess">admin</div>
-</section>
+    </div>
+  </section>
 
-<script>
-  // FADE-IN SECTIONS
-  const sections = document.querySelectorAll('section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.15 });
-  sections.forEach(s => observer.observe(s));
+  <!-- Gift Registry -->
+  <section id="gifts">
+    <h2>Gift Registry</h2>
+    <p style="text-align:center;">
+      Placeholder for registry details, links, or notes.
+    </p>
+  </section>
 
-  // DYNAMIC PLUS-ONE INPUTS
-  const guestInputs = document.getElementById('guestInputs');
-  const guestSelect = document.getElementById('guests');
-  guestSelect.addEventListener('change', () => {
-    const num = parseInt(guestSelect.value);
-    const currentInputs = guestInputs.querySelectorAll('input').length;
+  <!-- Celebration Reminders -->
+  <section id="reminders">
+    <h2>Celebration Reminders</h2>
+    <p style="text-align:center;">
+      Dress code, schedule, special notes, or reminders go here.
+    </p>
+  </section>
 
-    if (num > currentInputs) {
-      for (let i = currentInputs; i < num; i++) {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.name = 'guestNames';
-        input.placeholder = `Full Name of Guest ${i + 1}`;
-        input.required = true;
-        guestInputs.appendChild(input);
-      }
-    } else if (num < currentInputs) {
-      for (let i = currentInputs - 1; i >= num; i--) {
-        guestInputs.removeChild(guestInputs.children[i]);
-      }
+  <!-- Location -->
+  <section id="location">
+    <h2>Location</h2>
+    <p style="text-align:center;">
+      Ceremony and reception location details.
+    </p>
+  </section>
+
+  <footer>
+    © Our Wedding
+  </footer>
+
+  <script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn5bxUYo0WUI4Tq726G_PvjbHpiMWGaReGTt_c69QRqjtOkZ9Ua6hx1s-dBg9g3X5Y6Q/exec";
+  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1qm_SbJVPNtdRdiOcfvWmR_i6Gnvfe2VlWhHvSRuRPl8/edit?gid=0#gid=0";
+
+  function submitRSVP() {
+    const firstInput = document.getElementById("firstName");
+    const lastInput = document.getElementById("lastName");
+
+    const firstName = firstInput.value.trim().replace(/\s+/g, " ");
+    const lastName = lastInput.value.trim().replace(/\s+/g, " ");
+    const message = document.getElementById("rsvp-message");
+
+    if (!firstName || !lastName) {
+      message.innerText = "Please enter both first and last name.";
+      return;
     }
-  });
 
-  // RSVP FORM SUBMISSION
-  const form = document.getElementById('rsvpForm');
-  const message = document.getElementById('formMessage');
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbxgZiHrAJSnvsTVtSfSKQaZzhQmPsYNtncBCDlN7A0tqQzKjei8Vw06Z74samxor8p4Yw/exec'; // replace with deployed Apps Script URL
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    message.textContent = 'Submitting…';
-    message.style.color = '#333';
-
-    try {
-      const guestNamesArray = Array.from(document.querySelectorAll('input[name="guestNames"]'))
-                                   .map(i => i.value.trim())
-                                   .filter(n => n !== '');
-      if (guestNamesArray.length === 0) {
-        message.textContent = 'Please enter at least one name.';
-        message.style.color = 'red';
-        return;
-      }
-
-      const payload = { guestNames: guestNamesArray };
-
-      const res = await fetch(scriptURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) throw new Error('Network response was not ok');
-
-      const result = await res.json();
-
-      if (result.status === 'duplicate') {
-        message.textContent = `Duplicate entry: ${result.names.join(', ')}. Please check your names.`;
-        message.style.color = 'red';
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ firstName, lastName })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "exists") {
+        alert("This name has already RSVP’d.");
       } else {
-        message.textContent = 'Thank you for your RSVP!';
-        message.style.color = 'green';
-        form.reset();
-        guestInputs.innerHTML = `<input type="text" name="guestNames" placeholder="Full Name" required />`;
-        guestSelect.value = '1';
+        message.innerText = "Thank you for your RSVP!";
+        firstInput.value = "";
+        lastInput.value = "";
       }
+    })
+    .catch(() => {
+      message.innerText = "Something went wrong. Please try again.";
+    });
+  }
 
-    } catch (err) {
-      console.error(err);
-      message.textContent = 'Error submitting RSVP. Please try again.';
-      message.style.color = 'red';
+  function adminAccess() {
+    const pw = prompt("Enter admin password:");
+    if (pw === "password123") {
+      window.open(SHEET_URL, "_blank");
+    } else {
+      alert("Incorrect password.");
     }
-  });
-
-  // ADMIN LINK
-  document.getElementById('adminAccess').addEventListener('click', () => {
-    const password = prompt('Admin password');
-    if (password === 'password123') {
-window.open(
-  'https://docs.google.com/spreadsheets/d/1I3oT6uv6Vt5J3qMzGpFH70sb7edcwzVpZVWc6_IA4UI/edit#gid=802293615',
-  '_blank'
-);
-    }
-  });
+  }
 </script>
+
 
 </body>
 </html>
