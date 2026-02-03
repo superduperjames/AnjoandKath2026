@@ -482,27 +482,33 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
     }
   </script>
 
-  <script>
+<script>
   const footer = document.querySelector('.parallax-footer');
   const bg = footer.querySelector('.parallax-bg');
 
-  function updateParallax() {
-    const rect = footer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+  let latestScrollY = 0;
+  let ticking = false;
 
-    // How far the footer is through the viewport (0 → 1)
-    const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-
-    // Adjust multiplier for strength
-    const translateY = (progress - 0.5) * 200;
-
-    bg.style.transform = `translateY(${translateY}px)`;
+  function onScroll() {
+    latestScrollY = window.scrollY;
+    if (!ticking) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
   }
 
-  window.addEventListener('scroll', updateParallax, { passive: true });
-  window.addEventListener('resize', updateParallax);
-  updateParallax();
+  function updateParallax() {
+    const rect = footer.getBoundingClientRect();
+    const offset = rect.top + window.scrollY;
+    const scrollDistance = window.scrollY - offset;
+
+    bg.style.transform = `translateY(${scrollDistance * 0.3}px)`;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
 </script>
+
 
   
 </body>
