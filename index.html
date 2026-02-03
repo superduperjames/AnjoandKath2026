@@ -136,13 +136,12 @@
   <!-- RSVP -->
   <section id="rsvp">
     <h2>RSVP</h2>
-<div class="rsvp-form">
-  <input type="text" id="firstName" placeholder="First Name" />
-  <input type="text" id="lastName" placeholder="Last Name" />
-  <button onclick="submitRSVP()">Submit RSVP</button>
-  <p id="rsvp-message"></p>
-</div>
 
+    <div class="rsvp-form">
+      <input type="text" id="firstName" placeholder="First Name" />
+      <input type="text" id="lastName" placeholder="Last Name" />
+      <button onclick="submitRSVP()">Submit RSVP</button>
+      <p id="rsvp-message"></p>
     </div>
   </section>
 
@@ -175,52 +174,50 @@
   </footer>
 
   <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn5bxUYo0WUI4Tq726G_PvjbHpiMWGaReGTt_c69QRqjtOkZ9Ua6hx1s-dBg9g3X5Y6Q/exec";
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1qm_SbJVPNtdRdiOcfvWmR_i6Gnvfe2VlWhHvSRuRPl8/edit?gid=0#gid=0";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn5bxUYo0WUI4Tq726G_PvjbHpiMWGaReGTt_c69QRqjtOkZ9Ua6hx1s-dBg9g3X5Y6Q/exec";
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/1qm_SbJVPNtdRdiOcfvWmR_i6Gnvfe2VlWhHvSRuRPl8/edit?gid=0#gid=0";
 
-  function submitRSVP() {
-    const firstInput = document.getElementById("firstName");
-    const lastInput = document.getElementById("lastName");
+    function submitRSVP() {
+      const firstInput = document.getElementById("firstName");
+      const lastInput = document.getElementById("lastName");
 
-    const firstName = firstInput.value.trim().replace(/\s+/g, " ");
-    const lastName = lastInput.value.trim().replace(/\s+/g, " ");
-    const message = document.getElementById("rsvp-message");
+      const firstName = firstInput.value.trim().replace(/\s+/g, " ");
+      const lastName = lastInput.value.trim().replace(/\s+/g, " ");
+      const message = document.getElementById("rsvp-message");
 
-    if (!firstName || !lastName) {
-      message.innerText = "Please enter both first and last name.";
-      return;
-    }
-
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstName, lastName })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === "exists") {
-        alert("This name has already RSVP’d.");
-      } else {
-        message.innerText = "Thank you for your RSVP!";
-        firstInput.value = "";
-        lastInput.value = "";
+      if (!firstName || !lastName) {
+        message.innerText = "Please enter both first and last name.";
+        return;
       }
-    })
-    .catch(() => {
-      message.innerText = "Something went wrong. Please try again.";
-    });
-  }
 
-  function adminAccess() {
-    const pw = prompt("Enter admin password:");
-    if (pw === "password123") {
-      window.open(SHEET_URL, "_blank");
-    } else {
-      alert("Incorrect password.");
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({ firstName, lastName })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "exists") {
+          alert("This name has already RSVP’d.");
+        } else {
+          message.innerText = "Thank you for your RSVP!";
+          firstInput.value = "";
+          lastInput.value = "";
+        }
+      })
+      .catch(() => {
+        message.innerText = "Something went wrong. Please try again.";
+      });
     }
-  }
-</script>
 
+    function adminAccess() {
+      const pw = prompt("Enter admin password:");
+      if (pw === "password123") {
+        window.open(SHEET_URL, "_blank");
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+  </script>
 
 </body>
 </html>
