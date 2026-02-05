@@ -496,9 +496,16 @@ function submitRSVP() {
   .then(res => res.json())
   .then(data => {
 
-    if (data.status === "exists") {
-      alert("This name already exists!");
-    } else {
+if (data.status === "exists") {
+
+  message.innerText = "This name already exists!";
+  message.style.opacity = "1";
+
+  clearTimeout(thankTimer);
+  thankTimer = setTimeout(hideMessage, 3000);
+
+} else {
+
       message.innerText = "Thank you! We can't wait to celebrate with you!";
       message.style.opacity = "1";
 
