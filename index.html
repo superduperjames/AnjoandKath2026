@@ -275,8 +275,11 @@ background-image: url("https://res.cloudinary.com/dzjdhooce/image/upload/v177015
       color:white;
     }
 #rsvp-message {
+  opacity: 1;
   transition: opacity .4s ease;
+  min-height: 18px;   /* keeps layout from jumping */
 }
+
 
     /* Gift Registry parallax */
     #gifts {
@@ -460,14 +463,14 @@ let thankTimer;
 function hideMessage() {
   const message = document.getElementById("rsvp-message");
 
+  // force a fade
   message.style.opacity = "0";
 
   setTimeout(() => {
     message.innerText = "";
-    message.style.opacity = "1";   // ← this was missing
+    message.style.opacity = "1";   // reset for next time
   }, 400);
 }
-
 
 function submitRSVP() {
   const firstInput = document.getElementById("firstName");
@@ -477,15 +480,14 @@ function submitRSVP() {
   const firstName = firstInput.value.trim().replace(/\s+/g, " ");
   const lastName = lastInput.value.trim().replace(/\s+/g, " ");
 
-if (!firstName || !lastName) {
-  message.innerText = "Please enter both first and last name.";
-  message.style.opacity = "1";
+  if (!firstName || !lastName) {
+    message.innerText = "Please enter both first and last name.";
+    message.style.opacity = "1";
 
-  clearTimeout(thankTimer);
-  thankTimer = setTimeout(hideMessage, 3000);
-  return;
-}
-
+    clearTimeout(thankTimer);
+    thankTimer = setTimeout(hideMessage, 3000);
+    return;
+  }
 
   fetch(SCRIPT_URL, {
     method: "POST",
@@ -503,7 +505,6 @@ if (!firstName || !lastName) {
       firstInput.value = "";
       lastInput.value = "";
 
-      // polite exit after 4 seconds
       clearTimeout(thankTimer);
       thankTimer = setTimeout(hideMessage, 3000);
     }
@@ -511,10 +512,14 @@ if (!firstName || !lastName) {
   })
   .catch(() => {
     message.innerText = "Something went wrong. Please try again.";
+    message.style.opacity = "1";
+
+    clearTimeout(thankTimer);
+    thankTimer = setTimeout(hideMessage, 3000);
   });
 }
 
-// vanish when user starts typing a new name
+// hide when they start again
 document.getElementById("firstName")
   .addEventListener("focus", hideMessage);
 
