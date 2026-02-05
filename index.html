@@ -274,6 +274,9 @@ background-image: url("https://res.cloudinary.com/dzjdhooce/image/upload/v177015
       background-color:#91452c;
       color:white;
     }
+#rsvp-message {
+  transition: opacity .4s ease;
+}
 
     /* Gift Registry parallax */
     #gifts {
@@ -452,42 +455,65 @@ Think of the day as part wedding, part reunion, and part elegant excuse to eat d
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxn5bxUYo0WUI4Tq726G_PvjbHpiMWGaReGTt_c69QRqjtOkZ9Ua6hx1s-dBg9g3X5Y6Q/exec";
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/1qm_SbJVPNtdRdiOcfvWmR_i6Gnvfe2VlWhHvSRuRPl8/edit?gid=0#gid=0";
 
-    function submitRSVP() {
-      const firstInput = document.getElementById("firstName");
-      const lastInput = document.getElementById("lastName");
-      const message = document.getElementById("rsvp-message");
+let thankTimer;
 
-      const firstName = firstInput.value.trim().replace(/\s+/g, " ");
-      const lastName = lastInput.value.trim().replace(/\s+/g, " ");
+function hideMessage() {
+  const message = document.getElementById("rsvp-message");
+  message.style.opacity = "0";
 
-      if (!firstName || !lastName) {
-        message.innerText = "Please enter both first and last name.";
-        return;
-      }
+  setTimeout(() => {
+    message.innerText = "";
+  }, 400);
+}
 
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify({ firstName, lastName })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === "exists") {
-          alert("This name already exists!");
-        } else {
-          message.innerText = "Thank you! We can't wait to celebrate with you!";
-          firstInput.value = "";
-          lastInput.value = "";
-        }
-      })
-      .catch(() => {
-        message.innerText = "Something went wrong. Please try again.";
-      });
+function submitRSVP() {
+  const firstInput = document.getElementById("firstName");
+  const lastInput = document.getElementById("lastName");
+  const message = document.getElementById("rsvp-message");
+
+  const firstName = firstInput.value.trim().replace(/\s+/g, " ");
+  const lastName = lastInput.value.trim().replace(/\s+/g, " ");
+
+  if (!firstName || !lastName) {
+    message.innerText = "Please enter both first and last name.";
+    return;
+  }
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({ firstName, lastName })
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    if (data.status === "exists") {
+      alert("This name already exists!");
+    } else {
+      message.innerText = "Thank you! We can't wait to celebrate with you!";
+      message.style.opacity = "1";
+
+      firstInput.value = "";
+      lastInput.value = "";
+
+      // polite exit after 4 seconds
+      clearTimeout(thankTimer);
+      thankTimer = setTimeout(hideMessage, 4000);
     }
+
+  })
+  .catch(() => {
+    message.innerText = "Something went wrong. Please try again.";
+  });
+}
+
+// vanish when user starts typing a new name
+document.getElementById("firstName")
+  .addEventListener("focus", hideMessage);
+
 
     function openRegistryPopup() {
       document.getElementById('registryPopup').style.display = 'flex';
     }
-
     function closeRegistryPopup() {
       document.getElementById('registryPopup').style.display = 'none';
     }
