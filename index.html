@@ -529,6 +529,15 @@ if (data.status === "exists") {
 // hide when they start again
 document.getElementById("firstName")
   .addEventListener("focus", hideMessage);
+document.addEventListener("DOMContentLoaded", function() {
+
+  const first = document.getElementById("firstName");
+
+  if (first) {
+    first.addEventListener("focus", hideMessage);
+  }
+
+});
 
 
     function openRegistryPopup() {
