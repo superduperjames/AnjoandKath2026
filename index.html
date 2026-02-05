@@ -462,13 +462,13 @@ let thankTimer;
 
 function hideMessage() {
   const message = document.getElementById("rsvp-message");
+  if (!message) return;       // safety net
 
-  // force a fade
   message.style.opacity = "0";
 
   setTimeout(() => {
     message.innerText = "";
-    message.style.opacity = "1";   // reset for next time
+    message.style.opacity = "1";
   }, 400);
 }
 
@@ -526,9 +526,7 @@ if (data.status === "exists") {
   });
 }
 
-// hide when they start again
-document.getElementById("firstName")
-  .addEventListener("focus", hideMessage);
+
 document.addEventListener("DOMContentLoaded", function() {
 
   const first = document.getElementById("firstName");
