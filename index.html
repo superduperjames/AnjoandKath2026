@@ -459,12 +459,15 @@ let thankTimer;
 
 function hideMessage() {
   const message = document.getElementById("rsvp-message");
+
   message.style.opacity = "0";
 
   setTimeout(() => {
     message.innerText = "";
+    message.style.opacity = "1";   // ← this was missing
   }, 400);
 }
+
 
 function submitRSVP() {
   const firstInput = document.getElementById("firstName");
@@ -474,10 +477,15 @@ function submitRSVP() {
   const firstName = firstInput.value.trim().replace(/\s+/g, " ");
   const lastName = lastInput.value.trim().replace(/\s+/g, " ");
 
-  if (!firstName || !lastName) {
-    message.innerText = "Please enter both first and last name.";
-    return;
-  }
+if (!firstName || !lastName) {
+  message.innerText = "Please enter both first and last name.";
+  message.style.opacity = "1";
+
+  clearTimeout(thankTimer);
+  thankTimer = setTimeout(hideMessage, 3000);
+  return;
+}
+
 
   fetch(SCRIPT_URL, {
     method: "POST",
@@ -497,7 +505,7 @@ function submitRSVP() {
 
       // polite exit after 4 seconds
       clearTimeout(thankTimer);
-      thankTimer = setTimeout(hideMessage, 4000);
+      thankTimer = setTimeout(hideMessage, 3000);
     }
 
   })
