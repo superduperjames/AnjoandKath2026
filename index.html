@@ -493,14 +493,14 @@ fetch(SCRIPT_URL, {
   method: "POST",
   body: JSON.stringify({ firstName, lastName })
 })
-.then(res => res.text())               // ← read as text first
+.then(res => res.text())              // read gently as text first
 .then(text => {
 
   let data;
   try {
-    data = JSON.parse(text);           // try JSON
+    data = JSON.parse(text);          // the ideal path
   } catch {
-    data = { status: "ok" };           // fallback if not JSON
+    data = { status: "ok" };          // parachute if anything odd happens
   }
 
   if (data.status === "exists") {
@@ -508,22 +508,37 @@ fetch(SCRIPT_URL, {
     message.innerText = "This name already exists!";
     message.style.opacity = "1";
 
-    clearTimeout(thankTimer);
-    thankTimer = setTimeout(hideMessage, 3000);
+  } else if (data.status === "error") {
+
+    message.innerText =
+      data.message || "Something went wrong. Please try again.";
+    message.style.opacity = "1";
 
   } else {
 
-    message.innerText = "Thank you! We can't wait to celebrate with you!";
+    message.innerText =
+      "Thank you! We can't wait to celebrate with you!";
     message.style.opacity = "1";
 
     firstInput.value = "";
     lastInput.value = "";
-
-    clearTimeout(thankTimer);
-    thankTimer = setTimeout(hideMessage, 3000);
   }
 
+  clearTimeout(thankTimer);
+  thankTimer = setTimeout(hideMessage, 3000);
+
 })
+.catch(() => {
+
+  message.innerText =
+    "Network hiccup. Please try again.";
+  message.style.opacity = "1";
+
+  clearTimeout(thankTimer);
+  thankTimer = setTimeout(hideMessage, 3000);
+
+});
+
 .catch(() => {
 
   // even here we still schedule the fade
@@ -551,6 +566,10 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
 });
+  
+const btn = document.querySelector(".rsvp-form button");
+btn.disabled = true;
+setTimeout(() => btn.disabled = false, 1200);
 
 
     function openRegistryPopup() {
